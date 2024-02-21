@@ -1,0 +1,8 @@
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      database: practicedatabase
+      port: 27017
+      host: localhost
+      auto-index-creation: true
