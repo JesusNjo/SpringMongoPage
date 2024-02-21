@@ -41,6 +41,13 @@ public interface ClientRepository extends MongoRepository<Client,String> {
     })
     Integer countTotalClients();
 
+    @Aggregation(pipeline = {
+            "{$match: {$or: [{ 'name': {$regex: ?0} }, { 'city': {$regex: ?0} }]}}",
+            "{$sort: { ?1: ?2 }}",
+            "{$skip: ?3}",
+            "{$limit : ?4}"
+    })
+    List<Client> searchClientByQuery(String query, String property, int direction, int skip, int limit);
 
 
 }
