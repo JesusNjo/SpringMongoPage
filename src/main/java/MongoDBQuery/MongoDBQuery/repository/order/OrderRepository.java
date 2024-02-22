@@ -12,4 +12,11 @@ public interface OrderRepository extends MongoRepository<Order,String> {
             "{$match : {_id: ?0}}"
     })
     Order getOrderById(String _id);
+
+    @Aggregation({
+            "{$addFields: { client0Id: { $toObjectId: ?0 } }}",
+            "{$lookup:{from:'clients', localField:'client0id', foreignField:'name', as: client_info}",
+            "{unwind: '$client_info'}"
+    })
+    Order lookingForByParameter(String param);
 }
