@@ -14,4 +14,5 @@ public interface IClientService {
     public List<Client> findClientByPagination(Pagination pagination);
     public Integer countTotalClient();
     public void createClient(Client client);
+    public Client findClientByName(String name);
 }

@@ -5,6 +5,9 @@ import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Set;
+
 @Repository
 public interface OrderRepository extends MongoRepository<Order,String> {
 
@@ -13,10 +16,11 @@ public interface OrderRepository extends MongoRepository<Order,String> {
     })
     Order getOrderById(String _id);
 
-    @Aggregation({
-            "{$addFields: { client0Id: { $toObjectId: ?0 } }}",
-            "{$lookup:{from:'clients', localField:'client0id', foreignField:'name', as: client_info}",
-            "{unwind: '$client_info'}"
+    @Aggregation(pipeline = {
+            "{$addFields: {clientName: {$toString: '$client'}}}",
+            "{$lookup: {from:'clients', localField:'clientName', foreignField: 'name',as:'client_info'}}",
+            "{$unwind: '$client_info'}",
+            "{$project: {clientName: '$client_info.name'}}"
     })
-    Order lookingForByParameter(String param);
+    Set<String> clientWithOrders();
 }

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+
 @Service("OrderServiceImpl")
 @RequiredArgsConstructor
 @Slf4j
@@ -34,11 +36,11 @@ public class OrderServiceImpl implements IOrderService{
 
     @Override
     public void createOrder(Order order) {
-        Client clientTo = clientService.findClientById(order.getClient());
-        Product productTo = produceService.findProductById(order.getProduct());
+        Client clientTo = clientService.findClientByName(order.getClient());
+        Product productTo = produceService.findPByName(order.getProduct());
         order = Order.builder()
-                .client(clientTo.getId())
-                .product(productTo.getId())
+                .client(clientTo.getName())
+                .product(productTo.getName())
                 .quantity(order.getQuantity())
                 .build();
         if(clientTo.getName() != null && productTo.getName() != null){
@@ -52,7 +54,7 @@ public class OrderServiceImpl implements IOrderService{
     }
 
     @Override
-    public void lookByParam(String param) {
-        orderRepository.lookingForByParameter(param);
+    public Set<String> lookByParam() {
+        return orderRepository.clientWithOrders();
     }
 }

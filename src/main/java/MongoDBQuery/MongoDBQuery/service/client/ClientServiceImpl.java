@@ -47,6 +47,15 @@ public class ClientServiceImpl implements IClientService {
 
     @Override
     public void createClient(Client client) {
+        client = Client.builder()
+                .name(client.getName())
+                .age(client.getAge())
+                .city(client.getCity())
+                .build();
         clientRepository.save(client);
+    }
+    @Override
+    public Client findClientByName(String name) {
+        return clientRepository.findClientName(name);
     }
 }

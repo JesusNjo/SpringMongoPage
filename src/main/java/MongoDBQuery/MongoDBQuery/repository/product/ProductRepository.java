@@ -38,4 +38,9 @@ public interface ProductRepository extends MongoRepository<Product,String> {
             "{$count : totalProducts}"
     })
     Integer countTotalProducts();
+
+    @Aggregation({
+            "{$match: {name : {$regex : '.*?0.*'}}}"
+    })
+    Product findProductName(String name);
 }

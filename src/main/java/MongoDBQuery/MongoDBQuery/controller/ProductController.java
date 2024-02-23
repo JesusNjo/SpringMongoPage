@@ -58,4 +58,13 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/name")
+    public ResponseEntity<Product> findProductByName(@RequestParam("name") String name){
+        Product productByName = produceService.findPByName(name);
+        if(productByName != null){
+            return ResponseEntity.ok(productByName);
+        }else{
+            return ResponseEntity.noContent().build();
+        }
+    }
 }

@@ -49,5 +49,8 @@ public interface ClientRepository extends MongoRepository<Client,String> {
     })
     List<Client> searchClientByQuery(String query, String property, int direction, int skip, int limit);
 
-
+    @Aggregation({
+            "{$match: {name : {$regex : '.*?0.*'}}}"
+    })
+    Client findClientName(String name);
 }

@@ -50,4 +50,9 @@ public class ProductServiceImpl implements IProduceService {
     public Integer countTotalProduct() {
         return productRepository.countTotalProducts();
     }
+
+    @Override
+    public Product findPByName(String name) {
+        return productRepository.findProductName(name);
+    }
 }

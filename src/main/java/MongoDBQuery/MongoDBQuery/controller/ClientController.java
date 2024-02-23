@@ -54,6 +54,15 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/name")
+    public ResponseEntity<Client> findClientByNameC(@RequestParam String name){
+        Client clientByName = clientService.findClientByName(name);
+        if(clientByName != null){
+            return ResponseEntity.ok(clientByName);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
     @GetMapping("/count")
     public ResponseEntity<Integer> clientCount(){
         return ResponseEntity.ok(clientService.countTotalClient());

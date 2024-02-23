@@ -14,4 +14,5 @@ public interface IProduceService {
     public void createProduct(Product product);
     public void deleteProductById(String _id);
     public Integer countTotalProduct();
+    public Product findPByName(String name);
 }
